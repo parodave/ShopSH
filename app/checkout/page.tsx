@@ -4,10 +4,13 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import dynamicImport from 'next/dynamic';
 import { OrderSummary } from '@/components/OrderSummary';
 import { useCart } from '@/context/CartContext';
 
-export default function CheckoutPage() {
+export const dynamic = 'force-dynamic';
+
+function CheckoutPage() {
   const router = useRouter();
   const { state } = useCart();
   const [step, setStep] = useState(1);
@@ -332,3 +335,5 @@ export default function CheckoutPage() {
     </div>
   );
 }
+
+export default dynamicImport(() => Promise.resolve(CheckoutPage), { ssr: false });

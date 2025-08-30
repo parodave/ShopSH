@@ -8,6 +8,8 @@ import { useRouter } from 'next/navigation';
 import { products } from '@/data/products';
 import { useCart } from '@/context/CartContext';
 
+export const dynamic = 'force-dynamic';
+
 interface ProductPageProps {
   params: {
     id: string;

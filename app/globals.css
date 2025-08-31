@@ -4,7 +4,8 @@
 
 :root {
   --font-mono: 'JetBrains Mono', monospace;
-  --card-size: 240px;
+  /* Valeur par défaut cohérente avec s0 */
+  --card-size: 112px;
 }
 
 @layer base {

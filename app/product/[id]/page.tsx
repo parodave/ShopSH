@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronLeft, Plus } from 'lucide-react';
+import { ChevronLeft, Plus, X } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { products } from '@/data/products';
@@ -16,11 +16,66 @@ interface ProductPageProps {
   };
 }
 
+function SizePickerInline({
+  product,
+}: {
+  product: { id: string; title: string; price: number; image?: string };
+}) {
+  const { addItem } = useCart();
+  const [open, setOpen] = useState(false);
+
+  const sizes = [
+    { key: 'S', label: 'S' },
+    { key: 'M', label: 'M' },
+    { key: 'L', label: 'L' },
+  ];
+
+  function handleChoose(sizeKey: 'S' | 'M' | 'L') {
+    addItem({
+      productId: product.id,
+      title: product.title,
+      price: product.price,
+      image: product.image,
+      size: sizeKey,
+      quantity: 1,
+    });
+    setOpen(false);
+  }
+
+  return (
+    <div className="w-full">
+      <div className="mt-6 flex items-center justify-center">
+        <button
+          type="button"
+          aria-label={open ? 'Fermer tailles' : 'Ouvrir tailles'}
+          onClick={() => setOpen((v) => !v)}
+          className="p-2"
+        >
+          {open ? <X className="w-6 h-6" /> : <Plus className="w-6 h-6" />}
+        </button>
+      </div>
+
+      {open && (
+        <div className="mt-8 grid grid-cols-3 gap-12 max-w-3xl mx-auto text-center">
+          {sizes.map((s) => (
+            <button
+              key={s.key}
+              type="button"
+              onClick={() => handleChoose(s.key as 'S' | 'M' | 'L')}
+              className="text-2xl md:text-3xl tracking-wide py-2 hover:opacity-100 opacity-70"
+              aria-label={`Taille ${s.label}`}
+            >
+              {s.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function ProductPage({ params }: ProductPageProps) {
   const router = useRouter();
-  const { dispatch } = useCart();
-  const [selectedSize, setSelectedSize] = useState<string>('');
-  const [isAdded, setIsAdded] = useState(false);
 
   const product = products.find((p) => p.id === params.id);
 
@@ -28,25 +83,7 @@ export default function ProductPage({ params }: ProductPageProps) {
     return <div>Product not found</div>;
   }
 
-  const handleAddToCart = () => {
-    if (!selectedSize) return;
-    
-    dispatch({
-      type: 'ADD_ITEM',
-      payload: {
-        product,
-        size: selectedSize,
-        quantity: 1,
-      },
-    });
-    
-    setIsAdded(true);
-    setTimeout(() => setIsAdded(false), 1000);
-  };
-
-  const handleSizeSelect = (size: string) => {
-    setSelectedSize(size);
-  };
+  // removed old size selection and add-to-cart button per new design
 
   return (
     <div className="min-h-screen bg-white pt-20">
@@ -66,20 +103,26 @@ export default function ProductPage({ params }: ProductPageProps) {
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-8 md:gap-16">
-          {/* Product Image */}
+          {/* Product Image (compact) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            className="aspect-square bg-gray-100 relative"
           >
-            <Image
-              src={product.image}
-              alt={product.name}
-              fill
-              className="object-cover"
-              priority
-            />
+            {/* --- bloc image compact --- */}
+            <div className="max-w-3xl mx-auto px-4">
+              <div className="mt-6 mb-8 flex justify-center">
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  width={800}
+                  height={800}
+                  priority
+                  className="h-48 md:h-56 lg:h-64 w-auto object-contain"
+                />
+              </div>
+            </div>
+            {/* --- fin bloc image compact --- */}
           </motion.div>
 
           {/* Product Info */}
@@ -93,48 +136,8 @@ export default function ProductPage({ params }: ProductPageProps) {
               <h1 className="font-mono text-2xl font-normal mb-4 tracking-wider">{product.code}</h1>
               <p className="font-mono text-xl">${product.price}</p>
             </div>
-
-            {/* Size Selector */}
-            <div>
-              <h3 className="font-mono text-sm mb-6 uppercase tracking-wider">
-                SELECT SIZE
-              </h3>
-              <div className="grid grid-cols-4 gap-3">
-                {product.sizes.map((size) => (
-                  <motion.button
-                    key={size}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => handleSizeSelect(size)}
-                    className={`border border-black py-3 px-4 font-mono text-sm transition-colors ${
-                      selectedSize === size
-                        ? 'bg-black text-white'
-                        : 'bg-white text-black hover:bg-gray-100'
-                    }`}
-                  >
-                    {size}
-                  </motion.button>
-                ))}
-              </div>
-            </div>
-
-            {/* Add to Cart */}
-            <motion.button
-              whileHover={selectedSize ? { scale: 1.02 } : {}}
-              whileTap={selectedSize ? { scale: 0.98 } : {}}
-              onClick={handleAddToCart}
-              disabled={!selectedSize}
-              className={`w-full border-2 border-black py-4 font-mono text-sm uppercase tracking-wider transition-all ${
-                selectedSize
-                  ? 'bg-white text-black hover:bg-black hover:text-white cursor-pointer'
-                  : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-              }`}
-            >
-              <div className="flex items-center justify-center space-x-2">
-                <Plus className="w-4 h-4" />
-                <span>{isAdded ? 'ADDED' : 'ADD TO CART'}</span>
-              </div>
-            </motion.button>
+            {/* Inline size picker and immediate add-to-cart */}
+            <SizePickerInline product={{ id: product.id, title: product.name, price: product.price, image: product.image }} />
           </motion.div>
         </div>
       </div>

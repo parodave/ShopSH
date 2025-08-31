@@ -7,7 +7,7 @@ export default function PageFooter() {
 
   return (
     <footer className="border-t border-neutral-300 dark:border-neutral-700 bg-white/90 dark:bg-black/80">
-      <div className="mx-auto max-w-7xl px-4">
+      <div className="mx-auto max-w-[1200px] px-4">
         <div className="h-12 flex items-center">
           {/* Bouton: > quand fermé, X quand ouvert */}
           <button
@@ -39,4 +39,3 @@ export default function PageFooter() {
     </footer>
   );
 }
-

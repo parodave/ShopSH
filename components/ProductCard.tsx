@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Product } from '@/data/products';
+import { useCart } from "@/context/CartContext";
 
 interface ProductCardProps {
   product: Product;
@@ -11,6 +12,7 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, index }: ProductCardProps) {
+  const { addItem } = useCart();
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -31,6 +33,25 @@ export function ProductCard({ product, index }: ProductCardProps) {
         </div>
         <div className="text-center">
           <h3 className="font-mono text-sm font-normal tracking-wider">{product.code}</h3>
+        </div>
+        <div className="mt-3 flex justify-center">
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              addItem({
+                productId: product.id,
+                title: product.name,
+                price: product.price,
+                image: product.image,
+                size: product.sizes?.[0] ?? 'One Size',
+                quantity: 1,
+              });
+            }}
+            className="border border-black px-3 py-2 text-xs uppercase tracking-wider hover:bg-black hover:text-white transition-colors"
+          >
+            Add to cart
+          </button>
         </div>
       </Link>
     </motion.div>

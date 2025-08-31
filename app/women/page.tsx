@@ -1,11 +1,13 @@
 import UIControls from '@/components/UIControls';
+import { ProductGrid } from '@/components/ProductGrid';
+import { products } from '@/data/products';
 
 export default function WomenPage() {
   return (
-    <main className="min-h-screen pt-14 pb-24">
+    <main className="min-h-screen pt-14 pb-20">
       <UIControls gridId="product-grid" />
-      <section className="p-4">
-        <p>Women page placeholder.</p>
+      <section className="mx-auto max-w-7xl px-4">
+        <ProductGrid products={products} gridId="product-grid" />
       </section>
     </main>
   );

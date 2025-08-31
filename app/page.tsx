@@ -7,7 +7,7 @@ import { products } from '@/data/products';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white pt-14 pb-24">
+    <main className="min-h-screen bg-white pt-14 pb-20">
       <UIControls gridId="product-grid" />
       <div className="max-w-7xl mx-auto px-6">
         <motion.div

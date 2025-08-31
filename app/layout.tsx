@@ -5,6 +5,7 @@ import { Inter, JetBrains_Mono } from 'next/font/google';
 import { CartProvider } from '@/context/CartContext';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
+import UIControls from '@/components/UIControls';
 
 const inter = Inter({ subsets: ['latin'] });
 const jetbrainsMono = JetBrains_Mono({ 
@@ -24,6 +25,7 @@ export default function RootLayout({
         <meta name="description" content="Premium secondhand clothing store" />
       </head>
       <body className={`${inter.className} ${jetbrainsMono.variable} font-mono bg-white text-black`}>
+        <UIControls gridId="product-grid" />
         <CartProvider>
           <Navbar />
           <main className="min-h-screen">

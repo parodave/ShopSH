@@ -42,6 +42,9 @@
   }
 }
 
+/* Force clean white background globally */
+body { background: #fff; }
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -104,3 +107,79 @@ input[type="checkbox"]:checked::after {
   font-size: 12px;
   font-weight: bold;
 }
+
+/* === Compact header override (non destructif) === */
+.sh-header{
+  height:56px !important;           /* ~taille icône 24px + respiration */
+  min-height:56px !important;
+  padding:0 12px !important;        /* réduit le padding vertical à 0 */
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:16px !important;
+  box-sizing:border-box;
+}
+.sh-header *{
+  margin-top:0 !important;
+  margin-bottom:0 !important;       /* neutralise marges verticales parasites */
+  line-height:1 !important;
+}
+.sh-header svg,
+.sh-header .icon,
+.sh-header [data-icon]{
+  width:24px;
+  height:24px;                      /* icônes inchangées, juste centrées */
+}
+.sh-header > .spacer,
+.sh-header > .divider{
+  height:0 !important;              /* au cas où un séparateur force la hauteur */
+}
+@media (min-width:768px){
+  .sh-header{ height:56px !important; min-height:56px !important; }
+}
+
+/* === Header compact + content spacing neutralizer === */
+.sh-header{
+  padding-block: 0 !important;
+}
+.sh-header + .sh-content{
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+.sh-header + hr{
+  margin: 0 !important;
+}
+.sh-header + .spacer,
+.sh-header + .header-spacer{
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+@import '../styles/sh-header.css';
+
+/* Minimal compact header defaults (non-destructive) */
+header {
+  height: 48px;
+}
+header .w-6,
+header .h-6 {
+  width: 24px;
+  height: 24px;
+}
+header a {
+  line-height: 1;
+}
+
+/* === Header hard layout override (ne touche pas aux autres styles) === */
+.sh-header{ 
+  display:grid !important;
+  grid-template-columns: auto 1fr auto !important;
+  align-items:center !important;
+}
+.sh-header-left{ justify-self:start !important; }
+.sh-header-center{ justify-self:center !important; }
+.sh-header-right{ justify-self:end !important; }
+
+/* Empêche un éventuel style hérité de recentrer tout le header */
+.sh-header *[class*="justify-between"]{ justify-content:unset !important; }

@@ -26,7 +26,7 @@ export default function RootLayout({
       <body className={`${inter.className} ${jetbrainsMono.variable} font-mono bg-white text-black min-h-screen flex flex-col pt-14`}>
         <CartProvider>
           <HeaderBar />
-          <main className="flex-1">
+          <main className="flex-1 sh-content">
             {children}
           </main>
           {/* Footer unique en bas du flux, non fixe */}

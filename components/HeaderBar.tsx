@@ -9,14 +9,15 @@ export default function HeaderBar() {
 
   return (
     <header className="h-14 border-b bg-white/90 dark:bg-black/80 backdrop-blur">
-      <div className="mx-auto max-w-[1200px] h-full px-4 flex items-center justify-between">
-        {/* Gauche: +/− zoom */}
-        <div className="shrink-0">
+      {/* IMPORTANT : on force une grille 3 colonnes = gauche / centre / droite */}
+      <div className="mx-auto max-w-[1200px] h-full px-4 grid grid-cols-3 items-center">
+        {/* Gauche : + (Zoom) */}
+        <div className="flex items-center justify-start">
           <ZoomControl gridId="product-grid" />
         </div>
 
-        {/* Centre: Homme | Femme */}
-        <nav className="flex items-center gap-6">
+        {/* Centre : Homme | Femme */}
+        <nav className="flex items-center justify-center gap-6">
           <Link href="/men" aria-label="Homme" className="p-1 opacity-70 hover:opacity-100">
             <Mars className="w-6 h-6" />
           </Link>
@@ -25,11 +26,13 @@ export default function HeaderBar() {
           </Link>
         </nav>
 
-        {/* Droite: compteur + icône Panier (restaurée) */}
-        <Link href="/cart" aria-label="Panier" className="p-2 flex items-center gap-2">
-          <span className="font-mono text-lg font-bold select-none">{count}</span>
-          <ShoppingBag className="w-6 h-6" />
-        </Link>
+        {/* Droite : compteur + Panier */}
+        <div className="flex items-center justify-end">
+          <Link href="/cart" aria-label="Panier" className="p-2 flex items-center gap-2">
+            <span className="font-mono text-lg font-bold select-none">{count}</span>
+            <ShoppingBag className="w-6 h-6" />
+          </Link>
+        </div>
       </div>
     </header>
   );

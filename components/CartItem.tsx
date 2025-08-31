@@ -43,12 +43,13 @@ export function CartItem({ item, index }: CartItemProps) {
       className="flex items-center space-x-4 py-6 border-b border-gray-200"
     >
       {/* Product Image */}
-      <div className="w-20 h-20 bg-gray-100 relative flex-shrink-0">
+      <div className="w-20 h-20 bg-white relative flex-shrink-0">
         <Image
           src={item.product.image}
           alt={item.product.name}
           fill
-          className="object-cover"
+          className="object-cover bg-white"
+          style={{ backgroundColor: '#fff' }}
         />
       </div>
 

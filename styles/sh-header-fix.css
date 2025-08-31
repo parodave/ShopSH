@@ -1,0 +1,47 @@
+:root{ --shh:56px; }
+
+/* Compacter la barre sans changer l’alignement gauche/centre/droite */
+:is(header, nav, .header, .navbar, [class*="Header"], [class*="header"], [class*="Navbar"], [class*="navbar"]){
+  height:var(--shh) !important;
+  min-height:var(--shh) !important;
+  padding-top:0 !important;
+  padding-bottom:0 !important;
+  display:flex !important;
+  align-items:center !important;
+  box-sizing:border-box;
+  overflow:hidden;
+}
+
+/* Évite que des marges internes regonflent la hauteur */
+:is(header, nav, .header, .navbar, [class*="Header"], [class*="header"], [class*="Navbar"], [class*="navbar"]) *{
+  margin-top:0 !important;
+  margin-bottom:0 !important;
+  line-height:1 !important;
+}
+
+/* Conserver la taille visuelle des icônes */
+:is(header, nav, .header, .navbar, [class*="Header"], [class*="header"], [class*="Navbar"], [class*="navbar"]) svg,
+:is(header, nav, .header, .navbar, [class*="Header"], [class*="header"], [class*="Navbar"], [class*="navbar"]) .icon,
+:is(header, nav, .header, .navbar, [class*="Header"], [class*="header"], [class*="Navbar"], [class*="navbar"]) [data-icon]{
+  width:24px !important;
+  height:24px !important;
+}
+
+/* Pas d’espace fantôme sous le header */
+:is(header, nav, .header, .navbar, [class*="Header"], [class*="header"], [class*="Navbar"], [class*="navbar"]) + *{
+  margin-top:0 !important;
+  padding-top:0 !important;
+}
+
+/* Compacter un éventuel séparateur immédiatement après */
+:is(header, nav, .header, .navbar, [class*="Header"], [class*="header"], [class*="Navbar"], [class*="navbar"]) + :is(hr, .spacer, .header-spacer){
+  height:0 !important; margin:0 !important; padding:0 !important; border:0 !important;
+}
+
+@media (min-width:768px){
+  :is(header, nav, .header, .navbar, [class*="Header"], [class*="header"], [class*="Navbar"], [class*="navbar"]) {
+    height:var(--shh) !important;
+    min-height:var(--shh) !important;
+  }
+}
+

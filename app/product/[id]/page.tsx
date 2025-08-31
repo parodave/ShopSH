@@ -111,14 +111,15 @@ export default function ProductPage({ params }: ProductPageProps) {
           >
             {/* --- bloc image compact --- */}
             <div className="max-w-3xl mx-auto px-4">
-              <div className="mt-6 mb-8 flex justify-center">
+              <div className="mt-6 mb-8 flex justify-center bg-white">
                 <Image
                   src={product.image}
                   alt={product.name}
                   width={800}
                   height={800}
                   priority
-                  className="h-48 md:h-56 lg:h-64 w-auto object-contain"
+                  className="h-48 md:h-56 lg:h-64 w-auto object-contain bg-white"
+                  style={{ backgroundColor: '#fff' }}
                 />
               </div>
             </div>

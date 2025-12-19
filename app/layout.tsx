@@ -5,6 +5,7 @@ import { Inter, JetBrains_Mono } from 'next/font/google';
 import { CartProvider } from '@/context/CartContext';
 import PageFooter from '@/components/PageFooter';
 import HeaderBar from '@/components/HeaderBar';
+import ElevenLabsWidget from '@/components/ElevenLabsWidget';
 
 const inter = Inter({ subsets: ['latin'] });
 const jetbrainsMono = JetBrains_Mono({ 
@@ -32,6 +33,7 @@ export default function RootLayout({
           {/* Footer unique en bas du flux, non fixe */}
           <PageFooter />
         </CartProvider>
+        <ElevenLabsWidget />
       </body>
     </html>
   );

@@ -1,28 +1,19 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
+import Script from "next/script";
 
-const SCRIPT_SRC = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
-const AGENT_ID = 'agent_6801kcv4f1g9fbyt2fmesqhfap8r';
+const AGENT_ID = process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID;
 
 export default function ElevenLabsWidget() {
-  const [mounted, setMounted] = useState(false);
+  if (!AGENT_ID) return null;
 
-  useEffect(() => {
-    setMounted(true);
-
-    if (!document.querySelector(`script[src="${SCRIPT_SRC}"]`)) {
-      const script = document.createElement('script');
-      script.src = SCRIPT_SRC;
-      script.async = true;
-      script.type = 'text/javascript';
-      document.body.appendChild(script);
-    }
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
-
-  return <elevenlabs-convai agent-id={AGENT_ID}></elevenlabs-convai>;
+  return (
+    <>
+      <Script
+        src="https://unpkg.com/@elevenlabs/convai-widget-embed"
+        strategy="afterInteractive"
+      />
+      <elevenlabs-convai agent-id={AGENT_ID}></elevenlabs-convai>
+    </>
+  );
 }
